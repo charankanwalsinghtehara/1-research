@@ -39,7 +39,7 @@ Key outputs:
 streamlit run app.py
 ```
 
-The app expects `outputs/solubility/solubility_model.joblib`, created by the research workflow. Try an ethanol SMILES (`CCO`) or benzene (`c1ccccc1`).
+The app expects `outputs/solubility/solubility_model.joblib`, created by the research workflow. Choose a familiar substance from the visible buttons; no chemical code is needed. The optional advanced section accepts a SMILES structure code. The interactive charts compare validation scores and held-out predictions, with controls for random versus unseen-scaffold evaluation and MAE, RMSE, or R-squared.
 
 ## Notebook and research report
 
