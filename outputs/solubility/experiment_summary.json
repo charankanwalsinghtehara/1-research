@@ -1,0 +1,96 @@
+{
+  "cleaning_report": {
+    "duplicate_structures_removed": 11,
+    "input_rows": 1128,
+    "invalid_smiles": 0,
+    "invalid_target_values": 0,
+    "source_sha256": "8c06a76f0c6487d29ab0f903e6a7a7139f189ab3c1178f159c8be8964602f189",
+    "source_url": "https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/delaney-processed.csv",
+    "target_unit": "log(mol/L)",
+    "valid_rows": 1117
+  },
+  "dataset": "Delaney ESOL",
+  "deployment_selection": {
+    "descriptor_names": [
+      "MolWt",
+      "HeavyAtomMolWt",
+      "ExactMolWt",
+      "NumValenceElectrons",
+      "TPSA",
+      "MolLogP",
+      "NumHDonors",
+      "NumHAcceptors",
+      "NumRotatableBonds",
+      "NumHeteroatoms",
+      "NumRings",
+      "NumAromaticRings",
+      "NumAliphaticRings",
+      "FractionCSP3",
+      "LabuteASA",
+      "Chi0v",
+      "Chi1v",
+      "Kappa1",
+      "Kappa2",
+      "Kappa3"
+    ],
+    "feature_set": "descriptors",
+    "fingerprint_bits": 2048,
+    "fingerprint_radius": 2,
+    "model": "hist_gradient_boosting",
+    "model_name": "hist_gradient_boosting",
+    "selection_split": "scaffold",
+    "target": "measured log solubility in mols per litre",
+    "target_unit": "log(mol/L)",
+    "training_rows": 1117,
+    "validation_mae": 0.7128553556765892
+  },
+  "feature_sets": [
+    "descriptors",
+    "morgan"
+  ],
+  "models": [
+    "random_forest",
+    "extra_trees",
+    "hist_gradient_boosting"
+  ],
+  "rows": 1117,
+  "scaffold_policy": "Bemis-Murcko scaffolds stay in one split; acyclic structures with empty scaffolds receive unique canonical-SMILES groups.",
+  "seed": 42,
+  "selection_metric": "validation MAE",
+  "selections": {
+    "random": {
+      "features": "descriptors",
+      "model": "extra_trees",
+      "validation_mae": 0.4320528180272106
+    },
+    "scaffold": {
+      "features": "descriptors",
+      "model": "hist_gradient_boosting",
+      "validation_mae": 0.7128553556765892
+    }
+  },
+  "source_sha256": "8c06a76f0c6487d29ab0f903e6a7a7139f189ab3c1178f159c8be8964602f189",
+  "target": "measured log solubility in mols per litre",
+  "target_unit": "log(mol/L)",
+  "test_policy": "Only the validation-selected candidate is evaluated per split.",
+  "test_results": [
+    {
+      "features": "descriptors",
+      "mae": 0.456875811413454,
+      "model": "extra_trees",
+      "n_test": 112,
+      "r2": 0.9131193510380923,
+      "rmse": 0.6384221226664231,
+      "split": "random"
+    },
+    {
+      "features": "descriptors",
+      "mae": 0.42742977924449427,
+      "model": "hist_gradient_boosting",
+      "n_test": 112,
+      "r2": 0.8733088245514402,
+      "rmse": 0.6207382422999271,
+      "split": "scaffold"
+    }
+  ]
+}

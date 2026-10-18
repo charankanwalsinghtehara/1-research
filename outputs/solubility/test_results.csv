@@ -1,0 +1,3 @@
+split,model,features,mae,rmse,r2,n_test
+random,extra_trees,descriptors,0.456875811413454,0.6384221226664231,0.9131193510380923,112
+scaffold,hist_gradient_boosting,descriptors,0.42742977924449427,0.6207382422999271,0.8733088245514402,112
