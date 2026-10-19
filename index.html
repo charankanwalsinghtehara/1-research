@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning-Based Aqueous Solubility Prediction Using Molecular Descriptors and Graph-Based Features</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            line-height: 1.6;
+            color: #111;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background-color: #fff;
+        }
+        h1 {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .author-info {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .abstract {
+            margin: 20px 40px;
+            font-size: 13px;
+            text-align: justify;
+        }
+        .abstract-title {
+            font-weight: bold;
+            text-align: center;
+        }
+        h2 {
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 25px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 3px;
+        }
+        h3 {
+            font-size: 13px;
+            font-weight: bold;
+            font-style: italic;
+            margin-top: 15px;
+        }
+        p {
+            font-size: 14px;
+            text-align: justify;
+            margin: 10px 0;
+        }
+        ul {
+            font-size: 14px;
+            margin: 5px 0 15px 20px;
+        }
+        .equation {
+            text-align: center;
+            font-style: italic;
+            margin: 15px 0;
+        }
+        .download-action {
+            display: block;
+            width: 220px;
+            margin: 30px auto;
+            padding: 12px;
+            background-color: #0056b3;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .download-action:hover {
+            background-color: #004085;
+        }
+        @media print {
+            .download-action {
+                display: none;
+            }
+            body {
+                margin: 0;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="download-action" onclick="window.print();">Download / Save as PDF</button>
+
+    <h1>Machine Learning-Based Aqueous Solubility Prediction Using Molecular Descriptors and Graph-Based Features</h1>
+    
+    <div class="author-info">
+        <strong>Undergraduate Student (B.Tech CSE)</strong><br>
+        Department of Computer Science and Engineering
+    </div>
+
+    <div class="abstract">
+        <div class="abstract-title">Abstract</div>
+        <p>Aqueous solubility (log S) is a fundamental physicochemical property in drug discovery, environmental science, and chemical engineering. Traditional experimental methods for determining solubility are time-consuming, expensive, and impractical for large compound libraries. This paper presents an automated machine learning framework utilizing RDKit-extracted molecular descriptors and structural representations to predict aqueous solubility. Using the benchmark ESOL dataset, we evaluate multiple machine learning algorithms—including Random Forest, Gradient Boosting, and Support Vector Regressors. Our best-performing model achieves strong predictive performance, evaluated using metrics such as Mean Absolute Error (MAE), Root Mean Square Error (RMSE), and the Coefficient of Determination (R²). The entire pipeline is integrated into an interactive Streamlit web application for real-time inference and visualization.</p>
+        <p><strong>Keywords:</strong> <em>Aqueous Solubility, Machine Learning, RDKit, Cheminformatics, QSAR, Streamlit.</em></p>
+    </div>
+
+    <h2>I. Introduction</h2>
+    <p>The prediction of molecular properties is a cornerstone of early-stage drug discovery and chemical safety assessment. Aqueous solubility directly influences a drug candidate's absorption, distribution, metabolism, and excretion (ADME) profile. Compounds with poor solubility often fail clinical trials due to inadequate bioavailability.</p>
+    <p>While experimental assays provide precise measurements, they cannot keep pace with the vast combinatorial space of newly synthesized molecules. Consequently, Quantitative Structure-Property Relationship (QSPR) models have emerged as a vital computational alternative. By leveraging machine learning algorithms, computational models map molecular structures—represented through topological, constitutional, and electronic descriptors—to continuous property values such as log S.</p>
+    <p>This research presents an end-to-end machine learning pipeline for aqueous solubility prediction that bridges cheminformatics and software engineering through an interactive web-based deployment.</p>
+
+    <h2>II. Related Work</h2>
+    <p>Early computational approaches relied on linear regression models using simple hydrophobic descriptors like octanol-water partition coefficients (log P) and molecular weight. Delaney introduced the ESOL (Estimated SOLubility) dataset, establishing a benchmark linear regression model based on four molecular properties: log P, molecular weight, polar surface area, and rotatable bonds.</p>
+    <p>Recent advancements have shifted toward non-linear machine learning models, such as ensemble methods (Random Forests and Gradient Boosting) and deep learning architectures (Graph Neural Networks). These advanced models capture complex, non-linear atomic interactions and structural features that traditional linear equations miss.</p>
+
+    <h2>III. Dataset and Methodology</h2>
+    
+    <h3>A. Dataset Description</h3>
+    <p>The model is trained and evaluated using the ESOL dataset (Delaney, 2004), which contains logarithmic aqueous solubility values (log S) paired with simplified molecular-input line-entry system (SMILES) strings for thousands of chemical compounds.</p>
+
+    <h3>B. Feature Extraction via RDKit</h3>
+    <p>Raw SMILES strings cannot be fed directly into standard machine learning algorithms. We utilize RDKit, an open-source cheminformatics software library, to parse molecular graphs and extract numerical feature vectors (molecular descriptors). Key descriptors include:</p>
+    <ul>
+        <li><strong>Constitutional Descriptors:</strong> Molecular weight, atom counts, and bond counts.</li>
+        <li><strong>Topological & Connectivity Indices:</strong> Chi indices and valence connectivity.</li>
+        <li><strong>Physicochemical Properties:</strong> Estimated log P and topological polar surface area (TPSA).</li>
+    </ul>
+
+    <h3>C. Data Preprocessing & Splitting</h3>
+    <p>Missing SMILES or parsing errors are handled via imputation, followed by standardization of feature vectors to zero mean and unit variance. Data is partitioned into training, validation, and test sets using both random splits and scaffold-based splitting to evaluate out-of-distribution generalization.</p>
+
+    <h2>IV. System Architecture and Implementation</h2>
+    <p>The project architecture is divided into modular pipelines:</p>
+    <ul>
+        <li><strong>Data Pipeline (data_pipeline.py):</strong> Handles SMILES parsing, descriptor extraction, data cleaning, and splitting.</li>
+        <li><strong>Model Training & Comparison (model_comparison.py):</strong> Trains various regressors, tunes hyperparameters, and logs performance metrics.</li>
+        <li><strong>Inference Engine (solubility_project.py & Saved Model):</strong> Serializes the optimal model using Joblib (solubility_model.joblib) for fast prediction.</li>
+        <li><strong>User Interface (app.py):</strong> An interactive Streamlit web app allowing users to input SMILES strings and instantly visualize predicted solubility alongside molecular properties.</li>
+    </ul>
+
+    <h2>V. Experimental Setup and Evaluation Metrics</h2>
+    
+    <h3>A. Evaluation Metrics</h3>
+    <p>Performance is assessed using three standard regression metrics:</p>
+    <ul>
+        <li><strong>Mean Absolute Error (MAE):</strong> Measures the average magnitude of absolute errors.</li>
+        <div class="equation">MAE = (1 / n) * Σ |y<sub>i</sub> - ŷ<sub>i</sub>|</div>
+        <li><strong>Root Mean Square Error (RMSE):</strong> Penalizes larger errors more heavily.</li>
+        <div class="equation">RMSE = √((1 / n) * Σ (y<sub>i</sub> - ŷ<sub>i</sub>)²)</div>
+        <li><strong>Coefficient of Determination (R²):</strong> Measures the proportion of variance.</li>
+        <div class="equation">R² = 1 - [ Σ (y<sub>i</sub> - ŷ<sub>i</sub>)² / Σ (y<sub>i</sub> - ȳ)² ]</div>
+    </ul>
+
+    <h3>B. Experimental Results</h3>
+    <p>Ensemble regressors consistently outperformed baseline linear models, achieving lower MAE and RMSE values. Evaluation on held-out test splits confirmed robust generalization, with parity plots demonstrating tight clustering around the ideal y = ŷ line.</p>
+
+    <h2>VI. Discussion and Limitations</h2>
+    <p>RDKit molecular descriptors effectively capture structural determinants of solubility such as lipophilicity and molecular size. However, domain applicability remains limited to small organic molecules; accuracy may drop for large macromolecules, polymers, or complex organometallic compounds.</p>
+
+    <h2>VII. Conclusion</h2>
+    <p>This paper presented an automated, end-to-end machine learning pipeline for predicting aqueous solubility from molecular structures. By combining RDKit feature extraction, rigorous model comparison, and a Streamlit deployment interface, the system provides a practical tool for rapid property screening. Future iterations will explore graph deep learning architectures to further enhance prediction accuracy.</p>
+
+    <h2>VIII. References</h2>
+    <p>
+        [1] J. S. Delaney, "ESOL: Estimating Aqueous Solubility Directly from Molecular Structure," <em>Journal of Chemical Information and Computer Sciences</em>, vol. 44, no. 3, pp. 1000–1005, 2004.<br>
+        [2] G. Landrum, "RDKit: Open-source cheminformatics," 2006.<br>
+        [3] F. Pedregosa et al., "Scikit-learn: Machine Learning in Python," <em>Journal of Machine Learning Research</em>, vol. 12, pp. 2825–2830, 2011.
+    </p>
+
+</body>
+</html>
